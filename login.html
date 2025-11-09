@@ -69,12 +69,16 @@
     </div>
   </div>
 
-  <script>
-    // Configuration Supabase
-    const SUPABASE_URL = 'https://osfkcukxcxcpeeyvibgt.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zZmtjdWt4Y3hjcGVleXZpYmd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI3MDMwOTUsImV4cCI6MjA3ODI3OTA5NX0.0UUaNGFWEDSOIMQqg5Qjw-5SQ_dvMuKq8l0GZR-ojFk';
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+<script>
+  // Configuration Supabase - DOIT ÊTRE EN HAUT
+  const SUPABASE_URL = 'https://osfkcukxcxcpeeyvibgt.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zZmtjdWt4Y3hjcGVleXZpYmd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI3MDMwOTUsImV4cCI6MjA3ODI3OTA5NX0.0UUaNGFWEDSOIMQqg5Qjw-5SQ_dvMuKq8l0GZR-ojFk';
+  
+  // Initialiser Supabase IMMÉDIATEMENT
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+  // Attendre que la page soit complètement chargée
+  document.addEventListener('DOMContentLoaded', function() {
     // Gestion du formulaire de connexion
     document.getElementById('login-form').addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -89,6 +93,7 @@
       submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connexion...';
 
       try {
+        console.log('Tentative de connexion avec:', email);
         const { data, error } = await supabase.auth.signInWithPassword({ 
           email, 
           password 
@@ -98,11 +103,14 @@
 
         // Connexion réussie - rediriger vers la page d'accueil
         msgDiv.innerHTML = '<div class="success-message">Connexion réussie ! Redirection...</div>';
+        console.log('Connexion réussie:', data.user);
+        
         setTimeout(() => {
           window.location.href = 'index.html';
         }, 1500);
 
       } catch (error) {
+        console.error('Erreur de connexion:', error);
         msgDiv.innerHTML = `<div class="error-message">${error.message}</div>`;
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Se connecter';
@@ -114,6 +122,7 @@
       e.preventDefault();
       window.location.href = 'signup.html';
     });
-  </script>
+  });
+</script>
 </body>
 </html>

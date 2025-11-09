@@ -69,60 +69,60 @@
     </div>
   </div>
 
-  <script>
-    // Configuration Supabase
-    const SUPABASE_URL = 'https://osfkcukxcxcpeeyvibgt.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zZmtjdWt4Y3hjcGVleXZpYmd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI3MDMwOTUsImV4cCI6MjA3ODI3OTA5NX0.0UUaNGFWEDSOIMQqg5Qjw-5SQ_dvMuKq8l0GZR-ojFk';
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+<script>
+  // Configuration Supabase - DOIT ÊTRE EN HAUT
+  const SUPABASE_URL = 'https://osfkcukxcxcpeeyvibgt.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zZmtjdWt4Y3hjcGVleXZpYmd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI3MDMwOTUsImV4cCI6MjA3ODI3OTA5NX0.0UUaNGFWEDSOIMQqg5Qjw-5SQ_dvMuKq8l0GZR-ojFk';
+  
+  // Initialiser Supabase IMMÉDIATEMENT
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // Gestion du formulaire d'inscription
-    document.getElementById('signup-form').addEventListener('submit', async (e) => {
+  // Attendre que la page soit complètement chargée
+  document.addEventListener('DOMContentLoaded', function() {
+    // Gestion du formulaire de connexion
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      const email = document.getElementById('signupEmail').value;
-      const password = document.getElementById('signupPassword').value;
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
       const msgDiv = document.getElementById('authMessage');
       const submitBtn = e.target.querySelector('button[type="submit"]');
 
       // Désactiver le bouton pendant la requête
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Inscription...';
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connexion...';
 
       try {
-        const { data, error } = await supabase.auth.signUp({ 
+        console.log('Tentative de connexion avec:', email);
+        const { data, error } = await supabase.auth.signInWithPassword({ 
           email, 
           password 
         });
 
         if (error) throw error;
 
-        // Inscription réussie
-        msgDiv.innerHTML = `
-          <div class="success-message">
-            Inscription réussie ! 
-            ${data.user && !data.user.email_confirmed ? 
-              'Veuillez vérifier vos emails pour confirmer votre compte.' : 
-              'Vous pouvez maintenant vous connecter.'}
-          </div>
-        `;
+        // Connexion réussie - rediriger vers la page d'accueil
+        msgDiv.innerHTML = '<div class="success-message">Connexion réussie ! Redirection...</div>';
+        console.log('Connexion réussie:', data.user);
         
-        // Rediriger vers la page de connexion après 3 secondes
         setTimeout(() => {
-          window.location.href = 'login.html';
-        }, 3000);
+          window.location.href = 'index.html';
+        }, 1500);
 
       } catch (error) {
+        console.error('Erreur de connexion:', error);
         msgDiv.innerHTML = `<div class="error-message">${error.message}</div>`;
         submitBtn.disabled = false;
-        submitBtn.innerHTML = '<i class="fas fa-user-plus"></i> S\'inscrire';
+        submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Se connecter';
       }
     });
 
-    // Lien vers la connexion
-    document.getElementById('show-login').addEventListener('click', (e) => {
+    // Lien vers l'inscription
+    document.getElementById('show-signup').addEventListener('click', (e) => {
       e.preventDefault();
-      window.location.href = 'login.html';
+      window.location.href = 'signup.html';
     });
-  </script>
+  });
+</script>
 </body>
 </html>
