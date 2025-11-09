@@ -107,52 +107,7 @@ class LibraryApp {
   /**
    * Affiche le modal d'authentification (login ou signup)
    */
-  showAuthModal(view = 'login') {
-    const loginForm = `
-      <form id="login-form" class="auth-form">
-        <h2>Se connecter</h2>
-        <div class="form-group">
-          <label for="loginEmail">Email</label>
-          <input type="email" id="loginEmail" required>
-        </div>
-        <div class="form-group">
-          <label for="loginPassword">Mot de passe</label>
-          <input type="password" id="loginPassword" required>
-        </div>
-        <button type="submit">Connexion</button>
-        <div id="authMessage"></div>
-        <p>Pas de compte ? <a id="show-signup">Inscrivez-vous</a></p>
-      </form>
-    `;
-    
-    const signupForm = `
-      <form id="signup-form" class="auth-form">
-        <h2>S'inscrire</h2>
-        <div class="form-group">
-          <label for="signupEmail">Email</label>
-          <input type="email" id="signupEmail" required>
-        </div>
-        <div class="form-group">
-          <label for="signupPassword">Mot de passe</label>
-          <input type="password" id="signupPassword" required>
-        </div>
-        <button type="submit">Inscription</button>
-        <div id="authMessage"></div>
-        <p>Déjà un compte ? <a id="show-login">Connectez-vous</a></p>
-      </form>
-    `;
-    
-    this.dom.authView.innerHTML = (view === 'login') ? loginForm : signupForm;
-    this.dom.authModal.style.display = 'block';
-    
-    // Gérer les soumissions de formulaire
-    document.getElementById('login-form')?.addEventListener('submit', (e) => this.handleLogin(e));
-    document.getElementById('signup-form')?.addEventListener('submit', (e) => this.handleSignup(e));
-    
-    // Gérer les liens de basculement
-    document.getElementById('show-signup')?.addEventListener('click', () => this.showAuthModal('signup'));
-    document.getElementById('show-login')?.addEventListener('click', () => this.showAuthModal('login'));
-  }
+
   
   closeAuthModal() {
     this.dom.authModal.style.display = 'none';
