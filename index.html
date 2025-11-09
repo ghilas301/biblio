@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LexLibris - Bibliothèque de Droit</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <i class="fas fa-balance-scale"></i>
+        <span>LexLibris</span>
+      </div>
+      <div class="nav-search">
+        <input type="text" id="searchInput" placeholder="Rechercher un livre, auteur...">
+        <button id="searchBtn"><i class="fas fa-search"></i></button>
+      </div>
+      <div class="nav-links">
+        <a href="#home" class="nav-link active">Accueil</a>
+        <a href="#categories" class="nav-link">Catégories</a>
+        <a href="#upload" class="nav-link" id="upload-nav-link" style="display: none;">Uploader</a>
+        
+        <a href="#" class="nav-link" id="login-btn">Se connecter</a>
+        <div id="user-info" style="display: none; align-items: center; gap: 1rem;">
+          <span id="user-email"></span>
+          <a href="#" class="nav-link" id="logout-btn">Déconnexion</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section id="home" class="page active">
+    <div class="hero">
+      <h1>Bibliothèque de Droit Collaborative</h1>
+      <p>Partagez et découvrez des ressources juridiques de qualité</p>
+    </div>
+
+    <div class="filters">
+      <select id="categoryFilter">
+        <option value="all">Toutes les catégories</option>
+      </select>
+      <select id="sortFilter">
+        <option value="recent">Plus récents</option>
+        <option value="title">Ordre alphabétique</option>
+        <option value="author">Par auteur</option>
+        <option value="popular">Plus populaires</option>
+      </select>
+    </div>
+
+    <div class="books-grid" id="booksGrid">
+      <div class="loader">Chargement des livres...</div>
+    </div>
+  </section>
+
+  <section id="categories" class="page">
+    <h2>Catégories</h2>
+    <div class="categories-grid" id="categoriesGrid">
+      </div>
+  </section>
+
+  <section id="upload" class="page">
+    <div class="upload-container">
+      <h2>Uploader un Livre</h2>
+      <form id="uploadForm" class="upload-form">
+        <div class="form-group">
+          <label for="bookTitle">Titre du livre *</label>
+          <input type="text" id="bookTitle" name="title" required>
+        </div>
+        <div class="form-group">
+          <label for="bookAuthor">Auteur *</label>
+          <input type="text" id="bookAuthor" name="author" required>
+        </div>
+        <div class="form-group">
+          <label for="bookCategory">Catégorie</label>
+          <input type="text" id="bookCategory" name="category" placeholder="Ex: Droit Civil">
+          <small>La catégorie sera créée si elle n'existe pas.</small>
+        </div>
+        <div class="form-group">
+          <label for="publicationDate">Date de publication</label>
+          <input type="date" id="publicationDate" name="publicationDate">
+        </div>
+        <div class="form-group">
+          <label for="bookDescription">Description</label>
+          <textarea id="bookDescription" name="description" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="bookFile">Fichier du livre *</label>
+          <input type="file" id="bookFile" name="file" accept=".pdf,.epub,.doc,.docx" required>
+          <small>Formats acceptés: PDF, EPUB, DOC, DOCX (max 10MB)</small>
+        </div>
+        <button type="submit" class="upload-btn" id="upload-submit-btn">
+          <i class="fas fa-upload"></i> Uploader le livre
+        </button>
+      </form>
+      <div id="uploadMessage"></div>
+    </div>
+  </section>
+
+  <div id="bookModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="bookDetails"></div>
+    </div>
+  </div>
+
+  <div id="auth-modal" class="modal">
+    <div class="modal-content auth-modal">
+      <span class="close" id="auth-close">&times;</span>
+      <div id="auth-view">
+        </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
